@@ -7,9 +7,15 @@
     {
       "type": "node",
       "request": "attach",
+      "port": 9229,
+      "restart": true,
       "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "outFiles": ["${workspaceFolder}/**/*.js"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ]
     }
   ]
 }
