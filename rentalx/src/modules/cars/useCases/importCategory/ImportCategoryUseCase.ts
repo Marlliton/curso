@@ -1,4 +1,4 @@
-import { createReadStream } from "node:fs";
+import { createReadStream, promises } from "node:fs";
 import { parse } from "csv-parse";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
@@ -27,12 +27,13 @@ export class ImportCategoryUseCase {
           });
         })
         .on("end", () => {
+          promises.unlink(file.path);
           resolve(categories);
         })
         .on("error", error => {
           reject(error);
         });
-    });
+    }); 
   }
 
   async execute(file: Express.Multer.File): Promise<void> {
@@ -40,7 +41,6 @@ export class ImportCategoryUseCase {
 
     categories.forEach(category => {
       const existsCategory = this.createCategories.findByName(category.name);
-      console.log(existsCategory)
       if (!existsCategory) {
         this.createCategories.create({ name: category.name, description: category.description });
       }
