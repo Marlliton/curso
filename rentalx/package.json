@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev:inspect": "ts-node-dev --inspect --respawn --transpile-only src/server.ts",
-    "dev": "tsnd --respawn --clear src/server.ts"
+    "dev": "tsnd --respawn --clear src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "migration:run": "ts-node-dev ./node_modules/typeorm/cli.js migration:run -d src/database/dataSource.ts",
+    "migration:revert": "ts-node-dev ./node_modules/typeorm/cli.js migration:revert -d src/database/dataSource.ts"
   },
   "devDependencies": {
     "@types/multer": "^1.4.7",
@@ -21,6 +24,9 @@
     "csv-parse": "^5.3.3",
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.11",
     "uuid": "^9.0.0"
   },
   "keywords": [],
