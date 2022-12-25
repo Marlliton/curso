@@ -22,7 +22,7 @@ export class CategoriesRepository implements ICategoriesRepository {
     return await this.repository.find();
   }
 
-  async findByName(name: string) {
+  async findByName(name: string): Promise<Category | null> {
     const category = await this.repository.findOneBy({
       name,
     });

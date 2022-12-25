@@ -6,7 +6,7 @@
   "scripts": {
     "dev:inspect": "ts-node-dev --inspect --respawn --transpile-only src/server.ts",
     "dev": "tsnd --respawn --clear src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "migration:run": "ts-node-dev ./node_modules/typeorm/cli.js migration:run -d src/database/dataSource.ts",
     "migration:revert": "ts-node-dev ./node_modules/typeorm/cli.js migration:revert -d src/database/dataSource.ts"
   },
