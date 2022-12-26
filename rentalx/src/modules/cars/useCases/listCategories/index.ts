@@ -1,9 +1,8 @@
-import { ListCategoriesUseCase } from "./ListCategoriesUseCase";
-import { ListCategoriesController } from "./ListCategoriesController";
 import { CategoriesRepository } from "../../repositories/implementations/CategoriesRepository";
-import { appDataSource } from "../../../../database/dataSource";
+import { ListCategoriesController } from "./ListCategoriesController";
+import { ListCategoriesUseCase } from "./ListCategoriesUseCase";
 
-const listCategoryUseCase = new ListCategoriesUseCase(new CategoriesRepository(appDataSource));
+const listCategoryUseCase = new ListCategoriesUseCase(new CategoriesRepository());
 const listCategoriesController = new ListCategoriesController(listCategoryUseCase);
 
 export { listCategoriesController };

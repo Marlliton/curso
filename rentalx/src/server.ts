@@ -5,6 +5,8 @@ import { routers } from "./routers";
 import swaggerJson from "./swagger.json";
 
 createConnection();
+import "./shared/container";
+
 const app = express();
 app.use(express.json());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJson));

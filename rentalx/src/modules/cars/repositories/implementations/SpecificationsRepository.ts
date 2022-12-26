@@ -5,17 +5,8 @@ export class SpecificationsRepository implements ISpecificationsRepository {
   private specifications: Specification[];
   private static INSTANCE: SpecificationsRepository;
 
-  private constructor() {
+  constructor() {
     this.specifications = [];
-  }
-
-  static getInstance(): SpecificationsRepository {
-    if (!SpecificationsRepository.INSTANCE) {
-      SpecificationsRepository.INSTANCE = new SpecificationsRepository();
-      return SpecificationsRepository.INSTANCE;
-    }
-
-    return SpecificationsRepository.INSTANCE;
   }
 
   create({ description, name }: ICreateSpecificationDTO): void {
@@ -28,8 +19,9 @@ export class SpecificationsRepository implements ISpecificationsRepository {
 
     this.specifications.push(specification);
   }
-  findByName(name: string): any {
-    return this.specifications.find(specification => specification.name === name)!;
+  findByName(name: string): Specification | null {
+    const specification = this.specifications.find(specification => specification.name === name);
+    return specification ?? null;
   }
 
   list(): Specification[] {

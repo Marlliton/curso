@@ -1,12 +1,13 @@
-import { DataSource, Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { appDataSource } from "../../../../database/dataSource";
 import { Category } from "../../entities/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
 
 export class CategoriesRepository implements ICategoriesRepository {
   private repository: Repository<Category>;
 
-  constructor(dataSorce: DataSource) {
-    this.repository = dataSorce.getRepository(Category);
+  constructor() {
+    this.repository = appDataSource.getRepository(Category);
   }
 
   async create({ description, name }: ICreateCategoryDTO): Promise<void> {
@@ -15,7 +16,7 @@ export class CategoriesRepository implements ICategoriesRepository {
       description,
     });
 
-    this.repository.save(category);
+    await this.repository.save(category);
   }
 
   async list(): Promise<Category[]> {
