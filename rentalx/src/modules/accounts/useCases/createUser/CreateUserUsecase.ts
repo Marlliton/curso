@@ -11,14 +11,18 @@ export class CreateUserUseCase {
   ) {}
 
   async execute({ driver_license, email, name, password }: IUserRepositoryDTO): Promise<void> {
-    const passwordHash = await hash(password, 8);
+    const userAlreadyExists = await this.userRepository.findByEmail(email)
+    if(userAlreadyExists) {
+      throw new Error("User already existis.")
+    }
 
+    const passwordHash = await hash(password, 8);
     await this.userRepository.create({
       driver_license,
       email,
       name,
       password: passwordHash,
-    });
+    }); 
   }
 }
     

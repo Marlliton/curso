@@ -11,12 +11,12 @@ export class UserRepository implements IUserRepository {
     this.repository = appDataSource.getRepository(User);
   }
 
-  async create({
-    name,
-    email,
-    password,
-    driver_license,
-  }: IUserRepositoryDTO): Promise<void> {
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.repository.findOneBy({ email });
+    return user ?? null;
+  }
+
+  async create({ name, email, password, driver_license }: IUserRepositoryDTO): Promise<void> {
     const user = this.repository.create({
       name,
       email,
