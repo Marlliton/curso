@@ -10,4 +10,3 @@ routers.use("/specifications", specificationsRouter);
 routers.use("/users", usersRoutes);
 
 export { routers };
- 
