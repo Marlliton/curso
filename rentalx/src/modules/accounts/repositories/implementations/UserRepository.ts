@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import { appDataSource } from "../../../../database/dataSource";
 import { IUserRepositoryDTO } from "../../dtos";
 import { User } from "../../entities/User";
-import { IUserRepository, UpdateUser } from "../IUserRepository";
+import { IUserRepository } from "../IUserRepository";
 
 export class UserRepository implements IUserRepository {
   private repository: Repository<User>;
@@ -10,15 +10,16 @@ export class UserRepository implements IUserRepository {
   constructor() {
     this.repository = appDataSource.getRepository(User);
   }
-  async update(id: string, data: UpdateUser): Promise<User | null> {
-    const user = await this.findById(id);
-    Object.assign(user!, {
-      ...user,
-      ...data,
-    });
 
-    await this.repository.save(user!);
-
+  async update(user: User): Promise<User | null> {
+    await this.repository
+      .createQueryBuilder()
+      .update(user)
+      .set({
+        avatar: user.avatar,
+      })
+      .where("id = :id", { id: user.id })
+      .execute();
     return user;
   }
 

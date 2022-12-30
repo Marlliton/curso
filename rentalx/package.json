@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:inspect": "ts-node-dev --inspect --respawn --transpile-only src/server.ts",
+    "dev:debug": "ts-node-dev --inspect=0.0.0.0:9229 src/server.ts",
     "dev": "tsnd --respawn --clear src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "migration:run": "ts-node-dev ./node_modules/typeorm/cli.js migration:run -d src/database/dataSource.ts",

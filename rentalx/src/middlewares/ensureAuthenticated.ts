@@ -20,7 +20,7 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
       "$2b$08$aqcN7mgFJm7nLVDNM5hYde0CEd.KZsJNkY7LrGpUrSmkDwNJdgmJC"
     ) as IReturnToken;
     const userRepository = new UserRepository();
-    const user = userRepository.findById(userId);
+    const user = await userRepository.findById(userId);
 
     if (!user) throw new AppErros("User does not exits.", 401);
 
@@ -28,7 +28,8 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
       id: userId,
     };
     next();
-  } catch {
-    throw new AppErros("Invalid Token.", 401);
+  } catch(err) {
+    const msg = err instanceof AppErros ? err.message : "Internal Error";
+    throw new AppErros(msg, 401);
   }
 }
