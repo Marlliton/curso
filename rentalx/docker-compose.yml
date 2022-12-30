@@ -6,7 +6,7 @@ services:
     container_name: database_ignite
     ports:
       - 5432:5432
-    restart: always
+    restart: on-failure
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=ignite
