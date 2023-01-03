@@ -1,7 +1,7 @@
-import { createReadStream, promises } from "node:fs";
-import { parse } from "csv-parse";
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 import { inject, injectable } from "tsyringe";
+import { parse } from "csv-parse";
+import { createReadStream, promises } from "node:fs";
+import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 
 interface IImportCategories {
   name: string;

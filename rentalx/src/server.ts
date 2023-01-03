@@ -2,9 +2,9 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 import { createConnection } from "./database/connection";
-import { AppErros } from "./errors/AppErros";
+import { AppErros } from "@errors/AppErros";
 import { routers } from "./routers";
-import "./shared/container";
+import "@shared/container";
 import swaggerJson from "./swagger.json";
 
 createConnection();

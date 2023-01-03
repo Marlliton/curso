@@ -2,8 +2,8 @@ import { NextFunction } from "express";
 import { Response } from "express";
 import { Request } from "express";
 import { verify } from "jsonwebtoken";
-import { AppErros } from "../errors/AppErros";
-import { UserRepository } from "../modules/accounts/repositories/implementations/UserRepository";
+import { AppErros } from "@errors/AppErros";
+import { UserRepository } from "@modules/accounts/repositories/implementations/UserRepository";
 
 interface IReturnToken {
   sub: string;
