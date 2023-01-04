@@ -1,9 +1,9 @@
-import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
+import { AppErros } from "@shared/errors/AppErros";
+import { IUserRepositoryDTO } from "@modules/accounts/dtos";
+import { UserRepositoryImMemory } from "@modules/accounts/repositories/inMemory/UserRepositoryImMemory";
+import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUsecase";
-import { IUserRepository } from "../../repositories/IUserRepository";
-import { UserRepositoryImMemory } from "../../repositories/inMemory/UserRepositoryImMemory";
-import { IUserRepositoryDTO } from "../../dtos";
-import { AppErros } from "../../../../errors/AppErros";
+import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 let userRepositoryInMemory: IUserRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;

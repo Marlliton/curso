@@ -2,8 +2,8 @@ import { NextFunction } from "express";
 import { Response } from "express";
 import { Request } from "express";
 import { verify } from "jsonwebtoken";
-import { AppErros } from "@errors/AppErros";
-import { UserRepository } from "@modules/accounts/repositories/implementations/UserRepository";
+import { AppErros } from "@shared/errors/AppErros";
+import { UserRepository } from "@modules/accounts/infra/typeorm/repositories/UserRepository";
 
 interface IReturnToken {
   sub: string;
@@ -28,7 +28,7 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
       id: userId,
     };
     next();
-  } catch(err) {
+  } catch (err) {
     const msg = err instanceof AppErros ? err.message : "Internal Error";
     throw new AppErros(msg, 401);
   }

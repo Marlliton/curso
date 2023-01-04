@@ -8,9 +8,9 @@ async function createConnection(host = "database_ignite") {
       })
       .initialize();
 
-    console.log("Conexão bem sucedida...");
+    console.log("Successful connection.");
   } catch (error) {
-    console.log("Erro na conexão", error);
+    console.log("Connection error: ", error);
   }
 }
 export { createConnection };

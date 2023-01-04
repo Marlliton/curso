@@ -1,11 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
-import { createConnection } from "./database/connection";
-import { AppErros } from "@errors/AppErros";
-import { routers } from "./routers";
+import { createConnection } from "../typeorm/connection";
+import { AppErros } from "@shared/errors/AppErros";
+import { routers } from "@shared/infra/http/routers";
 import "@shared/container";
-import swaggerJson from "./swagger.json";
+import swaggerJson from "../../../swagger.json";
 
 createConnection();
 
@@ -26,4 +26,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(3333, () => console.log("Inicialização concluída!"));
+app.listen(3333, () => console.log("Initialization completed!"));

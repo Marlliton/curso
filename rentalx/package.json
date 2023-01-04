@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:debug": "ts-node-dev --inspect=0.0.0.0:9229 src/server.ts",
-    "dev": "tsnd -r tsconfig-paths/register --respawn --clear src/server.ts",
+    "dev": "tsnd -r tsconfig-paths/register --respawn --clear src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:run": "yarn typeorm migration:run -d src/database/dataSource.ts",
     "migration:revert": "yarn typeorm migration:revert -d src/database/dataSource.ts",
