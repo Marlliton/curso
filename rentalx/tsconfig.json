@@ -10,8 +10,8 @@
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
       "@errors/*": ["errors/*"],
-      "@utils/*": ["utils/*"],
-    },
+      "@utils/*": ["utils/*"]
+    }, 
     "typeRoots": ["src/@types", "node_modules/@types"],
     "resolveJsonModule": true,
     "sourceMap": true,
