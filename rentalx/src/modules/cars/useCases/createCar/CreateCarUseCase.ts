@@ -1,5 +1,6 @@
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { inject, injectable } from "tsyringe";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { AppErros } from "@shared/errors/AppErros";
 
 export interface IRequest {
   name: string;
@@ -27,7 +28,10 @@ export class CreateCarUseCase {
     brand,
     category_id,
   }: IRequest) {
-    return await this.carsRepository.create({
+    const carAlreadyExists = await this.carsRepository.findByLicensePlate(license_plate);
+    if (carAlreadyExists) throw new AppErros("Car already exists.");
+
+    const car = await this.carsRepository.create({
       name,
       description,
       daily_rate,
@@ -36,5 +40,7 @@ export class CreateCarUseCase {
       brand,
       category_id,
     });
+
+    return car;
   }
 }

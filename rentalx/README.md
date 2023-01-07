@@ -2,14 +2,13 @@
 
 ## 1. Cadastro de carros
 **Requisitos funcionais**
-- [ ] Deve ser possível cadastrar um carro.
+- [x] Deve ser possível cadastrar um carro.
 - [ ] Deve ser possível listar todas as categorias.
 
 **Regras de negócio**
 - [ ] Semente um usuário administrador pode fazer o cadastro de carros.
-- [ ] Não deve ser possível cadastrar um carro com a placa já existente.
-- [ ] Não deve ser possível alterar a placa já cadastrado.
-- [ ] Um carro recém cadastrado deve está disponível para ser alugado.
+- [x] Não deve ser possível cadastrar um carro com a placa já existente.
+- [x] Um carro recém cadastrado deve está disponível para ser alugado.
 
 ## 2. Listagem de carros
 **Requisitos funcionais**
