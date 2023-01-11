@@ -11,6 +11,17 @@ export class CarsRepository implements ICarsRepository {
     this.repository = appDataSource.getRepository(Car);
   }
 
+  async findById(carId?: string | undefined): Promise<Car | null> {
+    const car = await this.repository.findOneBy({ id: carId });
+    return car ?? null;
+  }
+
+  async update(data: ICarRepositoryDTO): Promise<Car> {
+    let car = await this.findById(data.id);
+
+    return await this.repository.save({ ...car, ...data });
+  }
+
   async create({
     name,
     description,

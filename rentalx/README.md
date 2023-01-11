@@ -18,17 +18,14 @@
 - [x] Deve ser possível listar todos os carros que estão disponíveis filtrando pelo nome do carro.
 
 **Regras de negócio**
-- [ ] O usuário não precisa se logar para ver os carros disponíveis.
+- [x] O usuário não precisa se logar para ver os carros disponíveis.
 
 ## 3. Cadastro de especificação do veiculo
 **Requisitos funcionais**
 - [ ] deve ser possível cadastra uma especificação para um carro.
-- [ ] deve ser possível listar todas as especificação.
-- [ ] deve ser possível listar todos os carros.
 
 **Regras de negócio**
 - [ ] Não deve ser possível cadastrar uma especificação para um carro insistente.
-- [ ] 
 
 ## 4. Cadastro de imagens do veiculo
 **Requisitos funcionais**

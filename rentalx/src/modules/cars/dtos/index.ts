@@ -1,3 +1,5 @@
+import { Specification } from "../infra/typeorm/entities/Specification";
+
 export interface ICarRepositoryDTO {
   name: string;
   description: string;
@@ -6,4 +8,6 @@ export interface ICarRepositoryDTO {
   fine_amount: number;
   brand: string;
   category_id: string;
+  specifications?: Specification[];
+  id?: string;
 }

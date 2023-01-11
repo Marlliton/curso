@@ -8,6 +8,36 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     this.cars = [];
   }
 
+  async update({
+    brand,
+    category_id,
+    daily_rate,
+    description,
+    fine_amount,
+    license_plate,
+    name,
+    specifications,
+  }: ICarRepositoryDTO): Promise<Car> {
+    const car = await this.findByLicensePlate(license_plate);
+    Object.assign(car!, {
+      brand,
+      category_id,
+      daily_rate,
+      description,
+      fine_amount,
+      license_plate,
+      name,
+      specifications,
+    });
+
+    this.cars.push(car!);
+    return car!;
+  }
+
+  async findById(carId?: string | undefined): Promise<Car | null> {
+    return this.cars.find(car => car.id === carId) ?? null;
+  }
+
   async findByLicensePlate(license_plate: string): Promise<Car | null> {
     return this.cars.find(car => car.license_plate === license_plate) ?? null;
   }
