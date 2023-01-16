@@ -2,15 +2,20 @@ import { appDataSource } from "./dataSource";
 
 async function createConnection(host = "database_ignite") {
   try {
-    await appDataSource
+    const connection = await appDataSource
       .setOptions({
-        host,
+        host: process.env.NODE_ENV === "test" ? "localhost" : host,
+        database: process.env.NODE_ENV === "test" ? "rentx_test" : "rentx",
       })
       .initialize();
 
-    console.log("Successful connection.");
+    console.log(
+      "Successful connection with: ",
+      process.env.NODE_ENV === "test" ? "localhost" : host
+    );
+    return connection;
   } catch (error) {
-    console.log("Connection error: ", error);
+    throw `Ocorreu um erro ao conectar: ${error}`;
   }
 }
 export { createConnection };

@@ -22,22 +22,22 @@
 
 ## 3. Cadastro de especificação do veiculo
 **Requisitos funcionais**
-- [ ] deve ser possível cadastra uma especificação para um carro.
+- [x] deve ser possível cadastra uma especificação para um carro.
 
 **Regras de negócio**
-- [ ] Não deve ser possível cadastrar uma especificação para um carro insistente.
+- [x] Não deve ser possível cadastrar uma especificação para um carro insistente.
 
 ## 4. Cadastro de imagens do veiculo
 **Requisitos funcionais**
-- [ ] Deve ser possível cadastrar as imagens do carro.
-- [ ] Deve ser possível listar todos os carros.
+- [x] Deve ser possível cadastrar as imagens do carro.
+- [x] Deve ser possível listar todos os carros.
 
 **Requisitos não funcionais**
 - [x] Usar o multer para upload de imagens.
 
 **Regras de negócio**
-- [ ] O usuário deve pode cadastrar mais de uma imagem para o mesmo carro.
-- [ ] Somente usuários administradores podem fazer essas operações.
+- [x] O usuário deve poder cadastrar mais de uma imagem para o mesmo carro.
+- [x] Somente usuários administradores podem fazer essas operações.
 
 ## Aluguel do veiculo
 **Requisitos funcionais**
