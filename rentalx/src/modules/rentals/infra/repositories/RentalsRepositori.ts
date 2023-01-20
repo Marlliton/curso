@@ -29,6 +29,12 @@ export class RentalsRepository implements IRentalsRepository {
   async findOpenRentalToUser(userId: string): Promise<Rental | null> {
     const openByUser = await this.repository.findOneBy({ user_id: userId });
 
-    return openByUser ?? null
+    return openByUser ?? null;
+  }
+
+  async findById(id: string): Promise<Rental | null> {
+    const rental = await this.repository.findOneBy({ id });
+
+    return rental ?? null;
   }
 }

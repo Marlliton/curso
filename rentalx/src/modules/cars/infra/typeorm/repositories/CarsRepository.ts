@@ -4,6 +4,7 @@ import { ICarRepositoryDTO } from "@modules/cars/dtos";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { appDataSource } from "@shared/infra/typeorm/dataSource";
 import { Car } from "../entities/Car";
+import { AppErros } from "@shared/errors/AppErros";
 
 export class CarsRepository implements ICarsRepository {
   private repository: Repository<Car>;
@@ -17,6 +18,7 @@ export class CarsRepository implements ICarsRepository {
   }
 
   async update(data: ICarRepositoryDTO): Promise<Car> {
+    if (!data.id) throw new AppErros("Id not given.");
     let car = await this.findById(data.id);
 
     return await this.repository.save({ ...car, ...data });

@@ -20,4 +20,9 @@ function diffInHours(startDate: Date, endDate: Date) {
   return Math.ceil(result);
 }
 
-export { addDays, diffInHours };
+function diffInDays(startDate: Date, endDate: Date) {
+  if (!startDate || !endDate) return -1;
+  return Math.abs(endDate.getDate() - startDate.getDate());
+}
+
+export { addDays, diffInHours, diffInDays };

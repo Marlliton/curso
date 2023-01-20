@@ -1,3 +1,4 @@
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppErros } from "@shared/errors/AppErros";
@@ -12,8 +13,11 @@ interface IRequest {
 
 @injectable()
 export class CreateRentalUseCase {
-  constructor(@inject("RentalsRepository") private rentalsRepository: IRentalsRepository) {}
- 
+  constructor(
+    @inject("RentalsRepository") private rentalsRepository: IRentalsRepository,
+    @inject("CarsRepository") private carsRepository: ICarsRepository
+  ) {}
+
   async execute({ carId, expectReturnDate, userId }: IRequest): Promise<Rental> {
     const carUnavailable = await this.rentalsRepository.findOpenRentalCar(carId);
     if (carUnavailable) throw new AppErros("Car isn't available.");
@@ -27,6 +31,12 @@ export class CreateRentalUseCase {
       throw new AppErros("Minimum hours to return is 24 hours");
     }
 
-    return await this.rentalsRepository.create({ carId, expectReturnDate, userId });
+    await this.carsRepository.update({ id: carId, available: false });
+    return await this.rentalsRepository.create({
+      carId,
+      expectReturnDate:
+        expectReturnDate instanceof Date ? expectReturnDate : new Date(expectReturnDate),
+      userId,
+    });
   }
 }
