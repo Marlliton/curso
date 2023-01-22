@@ -5,3 +5,9 @@ export interface IUserRepositoryDTO {
   driver_license: string;
   avatar?: string;
 }
+
+export interface IUserTokensRepositoryDTO {
+  user_id: string;
+  refresh_token: string;
+  expired_date: string;
+}
