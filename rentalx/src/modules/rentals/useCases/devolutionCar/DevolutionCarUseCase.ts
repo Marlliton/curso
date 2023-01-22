@@ -2,13 +2,14 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppErros } from "@shared/errors/AppErros";
 import { diffInDays } from "@utils/date";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   userId: string;
   id: string;
 }
 
+@injectable()
 export class DevolutionCarUseCase {
   constructor(
     @inject("RentalsRepository")
@@ -33,6 +34,7 @@ export class DevolutionCarUseCase {
       const calculateFine = delay * car?.fine_amount!;
       total = calculateFine;
     }
+    console.log(total, delay)
 
     total += car?.daily_rate! * daily;
     rental.end_date = new Date();
@@ -46,7 +48,7 @@ export class DevolutionCarUseCase {
       id: rental.id,
       total: rental.total,
     });
-    await this.carsRepository.update({ available: true });
+    await this.carsRepository.update({ id: car?.id, available: true });
 
     return rental;
   }
