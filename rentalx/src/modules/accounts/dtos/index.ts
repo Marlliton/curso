@@ -9,5 +9,5 @@ export interface IUserRepositoryDTO {
 export interface IUserTokensRepositoryDTO {
   user_id: string;
   refresh_token: string;
-  expired_date: string;
+  expired_date: Date;
 }

@@ -1,8 +1,8 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
+import { $Date } from "@shared/dates/$Date";
 import { AppErros } from "@shared/errors/AppErros";
-import { diffInHours } from "@utils/date";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -27,7 +27,9 @@ export class CreateRentalUseCase {
     }
 
     const minimumHoursToReturn = 24; // 24 horas
-    if (diffInHours(new Date(), expectReturnDate) < minimumHoursToReturn) {
+    if (
+      $Date.diffInHours($Date.create(null), $Date.create(new Date(expectReturnDate))) < minimumHoursToReturn
+    ) {
       throw new AppErros("Minimum hours to return is 24 hours");
     }
 

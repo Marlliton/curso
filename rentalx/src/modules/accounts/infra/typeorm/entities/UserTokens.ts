@@ -18,7 +18,7 @@ export class UserTokens {
   refresh_token: string;
 
   @Column()
-  expired_date: string;
+  expired_date: Date;
 
   @CreateDateColumn()
   created_at: string;

@@ -1,5 +1,6 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
+import { $Date } from "@shared/dates/$Date";
 import { AppErros } from "@shared/errors/AppErros";
 import { diffInDays } from "@utils/date";
 import { inject, injectable } from "tsyringe";
@@ -24,17 +25,17 @@ export class DevolutionCarUseCase {
 
     if (!rental) throw new AppErros("Rental doesn't exists.");
 
-    let daily = diffInDays(rental.start_date, new Date());
+    let daily = $Date.diffInDays(rental.start_date, new Date());
     if (daily <= 0) {
       daily = 1; // Minimum daily
     }
-    const delay = diffInDays(new Date(), rental.expect_return_date);
+
+    const delay = $Date.diffInDays(rental.expect_return_date, new Date());
     let total = 0;
     if (delay > 0) {
       const calculateFine = delay * car?.fine_amount!;
       total = calculateFine;
     }
-    console.log(total, delay)
 
     total += car?.daily_rate! * daily;
     rental.end_date = new Date();
