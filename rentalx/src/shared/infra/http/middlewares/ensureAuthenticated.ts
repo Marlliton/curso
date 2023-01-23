@@ -1,9 +1,8 @@
-import { NextFunction } from "express";
-import { Response } from "express";
-import { Request } from "express";
-import { verify } from "jsonwebtoken";
+import auth from "@config/auth";
+import { UserTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UserTokensRepository";
 import { AppErros } from "@shared/errors/AppErros";
-import { UserRepository } from "@modules/accounts/infra/typeorm/repositories/UserRepository";
+import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
 
 interface IReturnToken {
   sub: string;
@@ -13,14 +12,12 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
   const authHeader = req.headers.authorization;
   if (!authHeader) throw new AppErros("Missing token authorization.", 401);
   const [, token] = authHeader.split(" ");
+  const userTokensRepository = new UserTokensRepository();
 
   try {
-    const { sub: userId } = verify(
-      token,
-      "$2b$08$aqcN7mgFJm7nLVDNM5hYde0CEd.KZsJNkY7LrGpUrSmkDwNJdgmJC"
-    ) as IReturnToken;
-    const userRepository = new UserRepository();
-    const user = await userRepository.findById(userId);
+    const { sub: userId } = verify(token, auth.secretKeyRefreshToken) as IReturnToken;
+
+    const user = await userTokensRepository.findByUserIdAndRefreshToken(userId, token);
 
     if (!user) throw new AppErros("User does not exits.", 401);
 

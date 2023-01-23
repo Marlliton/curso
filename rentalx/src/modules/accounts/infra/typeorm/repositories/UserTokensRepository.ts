@@ -2,6 +2,7 @@ import { IUserTokensRepositoryDTO } from "@modules/accounts/dtos";
 import { IUserTokensRepository } from "@modules/accounts/repositories/IUserTokensRepository";
 import { appDataSource } from "@shared/infra/typeorm/dataSource";
 import { Repository } from "typeorm";
+import { User } from "../entities/User";
 import { UserTokens } from "../entities/UserTokens";
 
 export class UserTokensRepository implements IUserTokensRepository {
@@ -19,5 +20,21 @@ export class UserTokensRepository implements IUserTokensRepository {
     });
 
     await this.repository.save(refreshToken);
+  }
+
+  async findByUserIdAndRefreshToken(
+    userId: string,
+    refreshToken: string
+  ): Promise<UserTokens | null> {
+    const userTokens = await this.repository.findOneBy({
+      user_id: userId,
+      refresh_token: refreshToken,
+    });
+
+    return userTokens ?? null;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.repository.delete({ id });
   }
 }
