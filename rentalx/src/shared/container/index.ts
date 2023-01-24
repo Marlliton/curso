@@ -1,6 +1,6 @@
 import { container } from "tsyringe";
 
-import "../dates"
+import "./providers";
 import { UserRepository } from "@modules/accounts/infra/typeorm/repositories/UserRepository";
 import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { CarsImageRepository } from "@modules/cars/infra/typeorm/repositories/CarsImageRepository";
@@ -17,7 +17,10 @@ import { IUserTokensRepository } from "@modules/accounts/repositories/IUserToken
 import { UserTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UserTokensRepository";
 
 container.registerSingleton<ICategoriesRepository>("CategoriesRepository", CategoriesRepository);
-container.registerSingleton<ISpecificationsRepository>("SpecificationsRepository", SpecificationsRepository);
+container.registerSingleton<ISpecificationsRepository>(
+  "SpecificationsRepository",
+  SpecificationsRepository
+);
 container.registerSingleton<IUserRepository>("UserRepository", UserRepository);
 container.registerSingleton<IUserTokensRepository>("UserTokensRepository", UserTokensRepository);
 container.registerSingleton<ICarsRepository>("CarsRepository", CarsRepository);

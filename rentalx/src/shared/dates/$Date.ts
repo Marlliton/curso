@@ -12,6 +12,10 @@ export class $Date extends Date {
     );
   }
 
+  static addHours(data: Dt, hours: number): $Date {
+    return new Date(data.getTime() + (hours * 60 * 60 * 1000))
+  }
+
   static create(date: Dt | null): $Date {
     return date?.getTime() ? new $Date(date.getTime()) : new $Date(new Date().getTime());
   }
@@ -29,4 +33,5 @@ export class $Date extends Date {
 
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
+
 }
