@@ -5,6 +5,7 @@ import { IUserTokensRepository } from "@modules/accounts/repositories/IUserToken
 import { AppErros } from "@shared/errors/AppErros";
 import { $Date } from "@shared/dates/$Date";
 import { IMailProvider } from "@shared/container/providers/mailProvider/IMailProvider";
+import { resolve } from "path";
 
 @injectable()
 export class SendForgotPasswordEmailUseCase {
@@ -22,6 +23,7 @@ export class SendForgotPasswordEmailUseCase {
     if (!user) {
       throw new AppErros("User not found.");
     }
+    const templatePath = resolve(__dirname, "..", "..", "views", "email", "forgotPassword.hbs");
 
     const token = uuidv4();
     await this.userTokensRepository.create({
@@ -33,7 +35,8 @@ export class SendForgotPasswordEmailUseCase {
     await this.mailProvider.sendMail(
       email,
       "Recuperação de senha",
-      `Link para recuperação de senha: ${token}`
+      { name: user.name, link: `${process.env.FORGOT_MAIL_URL}${token}` },
+      templatePath
     );
   }
 }
