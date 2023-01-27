@@ -32,7 +32,7 @@ export class EtherealMailProvider implements IMailProvider {
         to,
         from: "Rentx <noreplay@rentx.com.br>",
         subject,
-        text: templateStringHtml,
+        html: templateStringHtml,
       });
 
       console.log("Message sent: %s", message.messageId);
