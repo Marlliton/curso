@@ -34,12 +34,14 @@ export class UserRepository implements IUserRepository {
     return user ?? null;
   }
 
-  async create({ name, email, password, driver_license }: IUserRepositoryDTO): Promise<void> {
+  async create({ name, email, password, driver_license, id }: IUserRepositoryDTO): Promise<void> {
+    console.log("🚀 ~ file: UserRepository.ts:38 ~ UserRepository ~ create ~ password", password)
     const user = this.repository.create({
       name,
       email,
       password,
       driver_license,
+      id,
     });
 
     await this.repository.save(user);

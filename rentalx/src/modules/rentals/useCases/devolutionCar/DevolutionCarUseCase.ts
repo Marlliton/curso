@@ -2,7 +2,6 @@ import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { $Date } from "@shared/dates/$Date";
 import { AppErros } from "@shared/errors/AppErros";
-import { diffInDays } from "@utils/date";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
