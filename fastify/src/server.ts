@@ -5,7 +5,7 @@ const app = fastify()
 
 app.get('/hallo', async (request, reply) => {
   const test = await knex('sqlite_schema').select('*')
-  reply.send({ test })
+  return test
 })
 
 app
