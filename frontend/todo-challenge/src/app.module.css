@@ -1,0 +1,46 @@
+.container {
+  background-color: var(--gray-600);
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 4.88rem;
+  width: 46rem;
+}
+
+.wrapper > header {
+  width: 100%;
+}
+.wrapper > header div {
+  display: flex;
+  justify-content: space-between;
+  color: var(--blue-400);
+}
+
+.wrapper > header div :nth-child(2) {
+  color: var(--purple-500);
+}
+
+.wrapper > header div span {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: var(--gray-400);
+  color: var(--gray-100);
+  font-size: .75rem;
+  line-height: 1.25rem;
+}
+
+.content {
+  padding-top: 1.57rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}

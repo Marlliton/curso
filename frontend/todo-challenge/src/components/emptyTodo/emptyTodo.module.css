@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 18rem;
+  width: 100%;
+
+  border-top: 1px solid var(--gray-500);
+  border-radius: 8px;
+  box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.container > img {
+  height: 3.55rem;
+  width: 3.55rem;
+  margin-bottom: 1.5rem;
+}
+
+.container > p {
+  color: var(--gray-300);
+  font-weight: 800;
+  line-height: 1.5rem;
+}
+
+.container :nth-child(3) {
+  font-weight: 100;
+  font-size: .9rem;
+}
