@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  padding-bottom: .75rem;
+  gap: .75rem;
+  padding: 1rem;
+  background-color: var(--gray-500);
+
+  border-radius: 8px;
+}
+
+.circle {
+  color: var(--blue-400);
+}
+
+.check {
+  color: var(--purple-700);
+}
+
+.button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--gray-300);
+  vertical-align: middle;
+  cursor: pointer;
+  transition: all .1s;
+  display: inherit;
+}
+
+.button:active {
+  transform: scale(.98);
+}
