@@ -1,11 +1,17 @@
 .container {
   display: flex;
   padding-bottom: .75rem;
+  align-items: center;
   gap: .75rem;
   padding: 1rem;
+  width: 100%;
   background-color: var(--gray-500);
 
   border-radius: 8px;
+}
+
+.container > div {
+  flex: 1;
 }
 
 .circle {
@@ -25,6 +31,7 @@
   cursor: pointer;
   transition: all .1s;
   display: inherit;
+  align-self: flex-start;
 }
 
 .button:active {
