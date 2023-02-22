@@ -6,9 +6,10 @@ import { Task } from "../../core/task/Task";
 interface TaskProps {
   listTask: ListTask;
   onChange(task: Task): void;
+  onDelete(task: Task): void;
 }
 
-export function TaskComponent({ listTask, onChange }: TaskProps) {
+export function TaskComponent({ listTask, onChange, onDelete }: TaskProps) {
   function renderTasks() {
     return listTask.all.map(task => {
       return (
@@ -23,7 +24,7 @@ export function TaskComponent({ listTask, onChange }: TaskProps) {
           <div>
             <span>{task.description}</span>
           </div>
-          <button className={styles.button}>
+          <button className={styles.button} onClick={() => onDelete(task)}>
             <Trash size={24} />
           </button>
         </div>

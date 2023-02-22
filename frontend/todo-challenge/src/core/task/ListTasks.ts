@@ -15,8 +15,8 @@ export class ListTask extends Clonable<ListTask, ListTaskProps> {
     return this._applyFilter(this._props.tasks);
   }
 
-  deleteTask(id: string) {
-    const newList = this.props.tasks.filter(task => task.id !== id);
+  deleteTask(taskToDelete: Task) {
+    const newList = this.props.tasks.filter(task => task.id !== taskToDelete.id);
     this._props.tasks = newList;
     return this.clone({ tasks: newList });
   }
@@ -25,7 +25,17 @@ export class ListTask extends Clonable<ListTask, ListTaskProps> {
     const newList = this._props.tasks.map(task =>
       task.id === modifiedTask.id ? modifiedTask : task
     );
-    return this.clone({tasks: newList})
+    return this.clone({ tasks: newList });
+  }
+
+  addTask(task: Task): ListTask {
+    const newList = [...this._props.tasks, task];
+    return this.clone({ tasks: newList });
+  }
+
+  totalCompleted() {
+    const total = this.clone({ filter: "completed" }).all.length;
+    return total;
   }
 
   private _completedOnly(tasks: Task[]): Task[] {

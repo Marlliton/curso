@@ -21,9 +21,11 @@ export class Task extends Entity<Task, TaskProps> {
     return this._props.description;
   }
 
+  public static newTask(description: string): Task {
+    return new Task({ completed: false, description });
+  }
+
   public toggleStatus(): Task {
-    const a = this.clone({ completed: !this.completed });
-    console.log("🚀 ~ file: Task.ts:26 ~ Task ~ toggleStatus ~ a", a)
-    return a;
+    return this.clone({ completed: !this.completed });
   }
 }
