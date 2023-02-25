@@ -30,7 +30,14 @@ export function Home() {
           </datalist>
 
           <label htmlFor="minutesAmount">durante</label>
-          <CountDownInput placeholder="00" type="number" id="minutesAmount" />
+          <CountDownInput
+            step={5}
+            max={60}
+            min={5}
+            placeholder="00"
+            type="number"
+            id="minutesAmount"
+          />
           <span>minutos.</span>
         </FromContainer>
 
