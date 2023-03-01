@@ -1,18 +1,11 @@
-import { useForm } from 'react-hook-form'
+import { useContext } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { CyclesContext } from '../../../../context/CyclesContext'
 import { CountDownInput, FromContainer, TaskInput } from './styles'
 
-interface NewCycleFormData {
-  task: string
-  minutesAmount: number
-}
-
 export function NewFormCycle() {
-  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
-    defaultValues: {
-      task: '',
-      minutesAmount: 0,
-    },
-  })
+  const { activeCycle } = useContext(CyclesContext)
+  const { register } = useFormContext()
 
   return (
     <FromContainer>
@@ -37,7 +30,7 @@ export function NewFormCycle() {
       <CountDownInput
         step={5}
         max={60}
-        min={1}
+        min={5}
         placeholder="00"
         type="number"
         id="minutesAmount"
