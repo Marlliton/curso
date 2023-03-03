@@ -12,7 +12,7 @@ export function History() {
         <tr key={cycle.id}>
           <td>{cycle.task}</td>
           <td>{cycle.minutesAmount} minutos</td>
-          <td>{getDistanceNow(cycle.startDate)}</td>
+          <td>{getDistanceNow(new Date(cycle.startDate))}</td>
           <td>
             {cycle.finishedDate && (
               <Status statusColor="green">Concluído</Status>

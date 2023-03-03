@@ -36,7 +36,7 @@ export function CountDownContextProvider({ children }: CountDownContextProps) {
       interval = setInterval(() => {
         const differenceInSeconds = diffInSeconds(
           new Date(),
-          activeCycle.startDate,
+          new Date(activeCycle.startDate),
         )
 
         if (differenceInSeconds > totalSeconds) {
