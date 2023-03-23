@@ -7,7 +7,7 @@ interface SummaryCardProps {
 }
 
 export function SummaryCard({ icon }: SummaryCardProps) {
-  const bgColor = icon === "dollar" ? "bg-green-500" : "bg-gray-600";
+  const bgColor = icon === "dollar" ? "bg-green-700" : "bg-gray-600";
   return (
     <div className={`p-8 ${bgColor} rounded-md`}>
       <header className="flex justify-between items-center gap-2 pb-3 text-gray-300">

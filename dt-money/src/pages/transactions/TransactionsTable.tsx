@@ -11,7 +11,7 @@ export function TransactionsTable() {
   }
 
   return (
-    <div className="w-full max-w-6xl mt-16 mx-auto px-6">
+    <div className="w-full max-w-6xl mx-auto px-6">
       <table className="w-full border-separate border-spacing-x-0 border-spacing-y-2">
         <tbody>
           <tr>
