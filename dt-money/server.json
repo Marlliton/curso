@@ -1,0 +1,28 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Venda de site",
+      "type": "income",
+      "price": 15000,
+      "category": "venda",
+      "createdAt": "2023-03-24T00:04:00.515Z"
+    },
+    {
+      "id": 2,
+      "description": "Hamburger",
+      "type": "outcome",
+      "price": 40,
+      "category": "alimentação",
+      "createdAt": "2023-03-24T00:00:00.515Z"
+    },
+    {
+      "id": 3,
+      "description": "Concerto do carro",
+      "type": "outcome",
+      "price": 4500,
+      "category": "Carro",
+      "createdAt": "2023-03-24T00:00:00.515Z"
+    }
+  ]
+}

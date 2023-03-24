@@ -19,10 +19,6 @@
   }
 
   #item[data-state="checked"] {
-    @apply bg-green-700 text-white;
-  }
-
-  #item[data-state="checked"] {
     @apply text-white;
   }
 }
@@ -30,6 +26,9 @@
 @layer components {
   .btn {
     @apply border border-green-500 bg-green-500 hover:border-green-700 hover:bg-green-700 hover:text-white transition-colors;
+  }
+
+  .btn-ring {
     @apply outline-none focus:ring-offset-gray-800 focus:ring-1 focus:ring-green-300 focus:ring-offset-2;
   }
 }

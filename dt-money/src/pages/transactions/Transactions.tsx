@@ -1,9 +1,9 @@
-import { Header } from "../../components/header/Header";
-import { Summary } from "../../components/summary/Summary";
-import { TransactionsTable } from "./TransactionsTable";
+import { useEffect, useState } from "react";
 import { SearchForm } from "./SearchForm";
+import { TransactionsTable } from "./TransactionsTable";
 
 export function Transactions() {
+
   return (
     <div className="mt-16">
       <SearchForm />

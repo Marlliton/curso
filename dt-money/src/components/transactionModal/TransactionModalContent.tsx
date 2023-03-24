@@ -11,22 +11,22 @@ export function TransactionModalContent() {
             id="item"
             value="income"
             className={`
-              btn border-none bg-gray-600 hover:bg-gray-600 flex flex-1 items-center 
-              justify-center gap-3 p-4 rounded-md text-green-300 hover:text-green-300
+              btn-ring text-green-300 bg-gray-700 flex flex-1 items-center justify-center gap-3 p-4 rounded-md
+               data-[state=checked]:bg-green-500 hover:data-[state=unchecked]:bg-gray-600 hover:transition-colors
             `}
           >
-            <ArrowCircleUp size={24} /> <span className="text-gray-300">Entrada</span>
+            <ArrowCircleUp size={24} /> <span className="text-gray-100">Entrada</span>
           </RadioGroup.Item>
         ) : (
           <RadioGroup.Item
             id="item"
             value="outcome"
             className={`
-              btn border-none bg-gray-600 hover:bg-gray-600 flex flex-1 items-center 
-              justify-center gap-3 p-4 rounded-md text-red-300 hover:text-red-300
+              btn-ring text-red-500 focus:ring-red-300 border-none bg-gray-700 flex flex-1 items-center hover:transition-colors
+              justify-center gap-3 p-4 rounded-md data-[state=checked]:bg-red-500 hover:data-[state=unchecked]:bg-gray-600
             `}
           >
-            <ArrowCircleDown size={24} /> <span className="text-gray-300">Saída</span>
+            <ArrowCircleDown size={24} /> <span className="text-gray-100">Saída</span>
           </RadioGroup.Item>
         )}
       </>
@@ -74,7 +74,7 @@ export function TransactionModalContent() {
           <button
             type="submit"
             className={`
-            rounded-md p-4 font-bold mt-10 btn bg-green-300 mb-10
+            rounded-md p-4 font-bold mt-10 btn mb-10
           `}
           >
             Cadastrar

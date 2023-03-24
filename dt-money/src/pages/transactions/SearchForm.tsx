@@ -10,8 +10,8 @@ export function SearchForm() {
       />
       <button
         className={`
-        flex items-center bg-transparent gap-3 py-4 px-5 rounded-md 
-        text-gray-300 font-bold btn hover:bg-green-500 border-green-300 hover:border-green-500
+        btn flex items-center bg-transparent gap-3 py-4 px-5 rounded-md 
+        text-gray-300 font-bold hover:bg-green-500 border-green-300 hover:border-green-500
       `}
       >
         <MagnifyingGlass size={20} /> <span>Buscar</span>
