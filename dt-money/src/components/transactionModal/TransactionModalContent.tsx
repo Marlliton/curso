@@ -15,10 +15,15 @@ const schema = z.object({
 
 type NewTransactionFormInputs = z.infer<typeof schema>;
 
-export function TransactionModalContent() {
+interface TransactionModalContentProps {
+  onCloseModal(): void;
+}
+
+export function TransactionModalContent({ onCloseModal }: TransactionModalContentProps) {
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<NewTransactionFormInputs>({
@@ -33,9 +38,9 @@ export function TransactionModalContent() {
   const { createTransaction } = useTransactions();
 
   async function handleNewTransaction(data: NewTransactionFormInputs) {
-    await new Promise(resolve => setTimeout(() => resolve(true), 2000));
-
     await createTransaction(data);
+    reset();
+    onCloseModal();
   }
 
   function transactionType(type: "income" | "outcome") {

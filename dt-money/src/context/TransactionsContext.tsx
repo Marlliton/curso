@@ -1,17 +1,22 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
-interface TransactionsProps {
-  id: string;
-  description: string;
+interface CreateTransactionInput {
   type: "income" | "outcome";
   price: number;
+  description: string;
   category: string;
+}
+
+interface TransactionsProps extends CreateTransactionInput {
+  id: string;
   createdAt: string;
 }
 
 interface TransactionsContextData {
   transactions: TransactionsProps[];
-  createTransaction(transaction: any): Promise<void>;
+  createTransaction(transaction: CreateTransactionInput): Promise<void>;
+  loadTransactions(query?: string): Promise<void>;
 }
 
 interface TransactionsProviderProps {
@@ -23,29 +28,25 @@ export const TransactionsContext = createContext({} as TransactionsContextData);
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
-  const baseURL = "http://localhost:3333/transactions";
-
-  async function loadTransactions() {
-    const response = await fetch(baseURL);
-    const transactions = await response.json();
-
-    setTransactions(transactions);
+  async function loadTransactions(query?: string) {
+    const { data } = await api.get("/transactions", {
+      params: {
+        _sort: "createdAt",
+        _order: "desc",
+        q: query,
+      },
+    });
+    setTransactions(data);
   }
 
-  async function createTransaction(transaction: any) {
+  async function createTransaction(transaction: CreateTransactionInput) {
     const newTransaction = Object.assign(transaction, {
       createdAt: new Date(),
     });
 
-    const response = await fetch(baseURL, {
-      body: JSON.stringify(newTransaction),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const { data } = await api.post("/transactions", newTransaction);
 
-    await loadTransactions();
+    setTransactions(state => [data, ...state]);
   }
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       value={{
         transactions,
         createTransaction,
+        loadTransactions,
       }}
     >
       {children}

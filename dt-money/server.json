@@ -15,6 +15,62 @@
       "price": 40,
       "category": "alimentação",
       "createdAt": "2023-03-24T00:00:00.515Z"
+    },
+    {
+      "price": 6000,
+      "description": "Setup novo",
+      "category": "Tec",
+      "type": "outcome",
+      "createdAt": "2023-03-25T02:19:00.150Z",
+      "id": 3
+    },
+    {
+      "price": 8000,
+      "description": "Desenvolvimento de app",
+      "category": "freelas",
+      "type": "income",
+      "createdAt": "2023-03-25T02:33:45.669Z",
+      "id": 4
+    },
+    {
+      "price": 10,
+      "description": "Pastel",
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2023-03-25T02:35:17.483Z",
+      "id": 5
+    },
+    {
+      "price": 700,
+      "description": "Pet Shop",
+      "category": "Pet",
+      "type": "outcome",
+      "createdAt": "2023-03-25T02:39:57.757Z",
+      "id": 6
+    },
+    {
+      "price": 500,
+      "description": "Pet Shop",
+      "category": "Pet",
+      "type": "outcome",
+      "createdAt": "2023-03-25T02:40:35.137Z",
+      "id": 7
+    },
+    {
+      "price": 3000,
+      "description": "Concerto do carro",
+      "category": "Carro",
+      "type": "outcome",
+      "createdAt": "2023-03-25T02:56:40.384Z",
+      "id": 8
+    },
+    {
+      "price": 120,
+      "description": "Almoço",
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2023-03-25T03:32:05.425Z",
+      "id": 9
     }
   ]
 }

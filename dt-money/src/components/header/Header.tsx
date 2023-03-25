@@ -2,13 +2,20 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "phosphor-react";
 import { TransactionModalContent } from "../transactionModal/TransactionModalContent";
 import logo from "../../assets/logo.svg";
+import { useState } from "react";
 
 export function Header() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  function handleCloseModal() {
+    setIsOpenModal(false);
+  }
+
   return (
     <header className="bg-gray-900 pt-6 pb-28">
       <div className="px-6 w-full max-w-6xl my-0 mx-auto flex justify-between items-center">
         <img src={logo} alt="" />
-        <Dialog.Root>
+        <Dialog.Root open={isOpenModal} onOpenChange={setIsOpenModal}>
           <Dialog.Trigger asChild>
             <button
               className={`
@@ -19,7 +26,7 @@ export function Header() {
             </button>
           </Dialog.Trigger>
 
-          <TransactionModalContent />
+          <TransactionModalContent onCloseModal={handleCloseModal} />
         </Dialog.Root>
       </div>
     </header>
