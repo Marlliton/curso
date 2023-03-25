@@ -88,7 +88,10 @@ export function TransactionModalContent({ onCloseModal }: TransactionModalConten
           <X size={24} />
         </Dialog.Close>
 
-        <form onSubmit={handleSubmit(handleNewTransaction)} className="flex flex-col gap-4 pt-8">
+        <form
+          onSubmit={handleSubmit(handleNewTransaction)}
+          className="flex flex-col gap-4 pt-8"
+        >
           <input
             required
             placeholder="Descrição"
