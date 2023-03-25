@@ -21,7 +21,7 @@ export function TransactionsTable() {
     <div className="w-full max-w-6xl mx-auto px-6">
       <table className="w-full border-separate border-spacing-x-0 border-spacing-y-2">
         <tbody>
-          {transactions.map(transaction => {
+          {transactions.map((transaction) => {
             return (
               <tr key={transaction.id}>
                 <td

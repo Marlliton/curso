@@ -49,28 +49,12 @@
       "id": 6
     },
     {
-      "price": 500,
-      "description": "Pet Shop",
-      "category": "Pet",
-      "type": "outcome",
-      "createdAt": "2023-03-25T02:40:35.137Z",
-      "id": 7
-    },
-    {
-      "price": 3000,
-      "description": "Concerto do carro",
-      "category": "Carro",
-      "type": "outcome",
-      "createdAt": "2023-03-25T02:56:40.384Z",
-      "id": 8
-    },
-    {
-      "price": 120,
+      "price": 150,
       "description": "Almoço",
       "category": "Alimentação",
-      "type": "outcome",
-      "createdAt": "2023-03-25T03:32:05.425Z",
-      "id": 9
+      "type": "income",
+      "createdAt": "2023-03-25T13:12:09.656Z",
+      "id": 7
     }
   ]
 }

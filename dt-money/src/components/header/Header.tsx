@@ -1,5 +1,4 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { X } from "phosphor-react";
 import { TransactionModalContent } from "../transactionModal/TransactionModalContent";
 import logo from "../../assets/logo.svg";
 import { useState } from "react";
