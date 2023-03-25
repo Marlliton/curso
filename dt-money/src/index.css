@@ -25,7 +25,11 @@
 
 @layer components {
   .btn {
-    @apply border border-green-500 bg-green-500 hover:border-green-700 hover:bg-green-700 hover:text-white transition-colors;
+    @apply border border-green-500 bg-green-500 transition-colors;
+  }
+
+  .btn-hover {
+    @apply hover:border-green-700 hover:bg-green-700 hover:text-white;
   }
 
   .btn-ring {

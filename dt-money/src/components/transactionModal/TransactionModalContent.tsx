@@ -1,8 +1,43 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
+import { useTransactions } from "../../hooks/useTransactions";
+
+const schema = z.object({
+  price: z.number(),
+  description: z.string(),
+  category: z.string(),
+  type: z.enum(["income", "outcome"]),
+});
+
+type NewTransactionFormInputs = z.infer<typeof schema>;
 
 export function TransactionModalContent() {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<NewTransactionFormInputs>({
+    defaultValues: {
+      price: 0,
+      description: "",
+      category: "",
+      type: "income",
+    },
+    resolver: zodResolver(schema),
+  });
+  const { createTransaction } = useTransactions();
+
+  async function handleNewTransaction(data: NewTransactionFormInputs) {
+    await new Promise(resolve => setTimeout(() => resolve(true), 2000));
+
+    await createTransaction(data);
+  }
+
   function transactionType(type: "income" | "outcome") {
     return (
       <>
@@ -11,8 +46,8 @@ export function TransactionModalContent() {
             id="item"
             value="income"
             className={`
-              btn-ring text-green-300 bg-gray-700 flex flex-1 items-center justify-center gap-3 p-4 rounded-md
-               data-[state=checked]:bg-green-500 hover:data-[state=unchecked]:bg-gray-600 hover:transition-colors
+            btn-ring text-green-300 bg-gray-700 flex flex-1 items-center justify-center gap-3 p-4 rounded-md
+            data-[state=checked]:bg-green-500 hover:data-[state=unchecked]:bg-gray-600 hover:transition-colors
             `}
           >
             <ArrowCircleUp size={24} /> <span className="text-gray-100">Entrada</span>
@@ -48,33 +83,55 @@ export function TransactionModalContent() {
           <X size={24} />
         </Dialog.Close>
 
-        <form action="" className="flex flex-col gap-4 pt-8">
+        <form onSubmit={handleSubmit(handleNewTransaction)} className="flex flex-col gap-4 pt-8">
           <input
             required
             placeholder="Descrição"
             className="placeholder:text-gray-500 text-gray-300 p-4 rounded-md bg-gray-900"
             type="text"
+            {...register("description")}
           />
+
           <input
             required
             placeholder="Preço"
             className="placeholder:text-gray-500 text-gray-300 p-4 rounded-md bg-gray-900"
             type="number"
+            {...register("price", { valueAsNumber: true })}
           />
+
           <input
             required
             placeholder="Categoria"
             className="placeholder:text-gray-500 text-gray-300 p-4 rounded-md bg-gray-900"
             type="text"
+            {...register("category")}
           />
-          <RadioGroup.Root className="grid grid-cols-2 gap-4 mt-2 ">
-            {transactionType("income")}
-            {transactionType("outcome")}
-          </RadioGroup.Root>
+
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => {
+              return (
+                <RadioGroup.Root
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="grid grid-cols-2 gap-4 mt-2 "
+                >
+                  {transactionType("income")}
+                  {transactionType("outcome")}
+                </RadioGroup.Root>
+              );
+            }}
+          />
           <button
+            disabled={isSubmitting}
             type="submit"
             className={`
-            rounded-md p-4 font-bold mt-10 btn mb-10
+            btn btn-ring ${
+              !isSubmitting && "btn-hover"
+            } disabled:cursor-not-allowed disabled:opacity-60 
+            rounded-md p-4 font-bold mt-10 mb-10
           `}
           >
             Cadastrar

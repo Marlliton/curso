@@ -12,7 +12,7 @@ export function Header() {
           <Dialog.Trigger asChild>
             <button
               className={`
-              btn btn-ring px-5 py-3 rounded-md font-bold
+              btn btn-ring btn-hover px-5 py-3 rounded-md font-bold
             `}
             >
               Nova Transação
