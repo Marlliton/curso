@@ -29,7 +29,7 @@ export function Carousel({ children, perPage }: CarouselProps) {
   }
 
   return (
-    <CarouselContainer css={{ gap: "3rem" }}>
+    <CarouselContainer>
       <div ref={carouselRef}>
         <CarouselButtonContainer>
           <button onClick={handlePrevClick}>

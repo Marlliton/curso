@@ -9,7 +9,7 @@ export const CarouselContainer = styled("div", {
   div: {
     height: "100%",
     display: "flex",
-    gap: ".5rem",
+    gap: "3rem",
 
     overflow: "scroll",
     scrollBehavior: "smooth",
@@ -20,6 +20,10 @@ export const CarouselContainer = styled("div", {
       button: {
         opacity: 1,
       },
+    },
+
+    "&::-webkit-scrollbar": {
+      width: 0,
     },
   },
 });
