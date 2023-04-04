@@ -1,7 +1,8 @@
 import { Carousel } from "@/components/Carousel";
 import { stripe } from "@/lib/stripe";
 import { HomeContainer, Product } from "@/styles/pages/home";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Stripe from "stripe";
 
@@ -11,31 +12,37 @@ interface HomeProps {
     description: string;
     image: string;
     name: string;
-    price: number;
+    price: string;
   }[];
 }
 
 export default function Home(props: HomeProps) {
   return (
-    <HomeContainer>
-      <Carousel perPage={2}>
-        {props.products.map((product) => {
-          return (
-            <Product href={`/product/${product.id}`} key={product.id}>
-              <Image width={520} height={480} src={product.image} alt="Camisa 01" />
-              <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
-              </footer>
-            </Product>
-          );
-        })}
-      </Carousel>
-    </HomeContainer>
+    <>
+      <Head>
+        <title>Home | Shop</title>
+      </Head>
+
+      <HomeContainer>
+        <Carousel perPage={2}>
+          {props.products.map((product) => {
+            return (
+              <Product href={`/product/${product.id}`} key={product.id} prefetch={false}>
+                <Image width={520} height={480} src={product.image} alt="Camisa 01" />
+                <footer>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </footer>
+              </Product>
+            );
+          })}
+        </Carousel>
+      </HomeContainer>
+    </>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await stripe.products.list({
     expand: ["data.default_price"],
   });
@@ -45,7 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       id: product.id,
       description: product.description,
-      image: product.images[0],
+      image: product.images[0] ?? "",
       name: product.name,
       price: new Intl.NumberFormat("pt-BR", {
         style: "currency",
@@ -58,6 +65,5 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       products,
     },
-    revalidate: 60 * 60 * 3, // 3 horas
   };
 };
