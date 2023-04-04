@@ -1,4 +1,4 @@
-import { CarouselButtonContainer, CarouselContainer } from "@/styles/components/Carousel";
+import { CarouselButtonContainer, CarouselContainer } from "@/styles/components/carousel";
 import { CaretLeft, CaretRight } from "phosphor-react";
 import { ReactNode, useRef } from "react";
 

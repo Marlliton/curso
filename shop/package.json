@@ -21,9 +21,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "stripe": "^11.17.0",
-    "typescript": "*"
+    "typescript": "*",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^34.0.1",

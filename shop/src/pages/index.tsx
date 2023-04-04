@@ -1,4 +1,5 @@
 import { Carousel } from "@/components/Carousel";
+import { ShoppingCartBag } from "@/components/shoppingCartBag";
 import { stripe } from "@/lib/stripe";
 import { HomeContainer, Product } from "@/styles/pages/home";
 import { GetServerSideProps } from "next";
@@ -30,8 +31,11 @@ export default function Home(props: HomeProps) {
               <Product href={`/product/${product.id}`} key={product.id} prefetch={false}>
                 <Image width={520} height={480} src={product.image} alt="Camisa 01" />
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <span>
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </span>
+                  <ShoppingCartBag />
                 </footer>
               </Product>
             );

@@ -52,9 +52,14 @@ export const Product = styled(Link, {
     color: "$gray100",
 
     span: {
-      color: "$green300",
-      fontSize: "$xl",
-      fontWeight: "bold",
+      display: "flex",
+      flexDirection: "column",
+
+      span: {
+        color: "$green300",
+        fontSize: "$xl",
+        fontWeight: "bold",
+      },
     },
   },
 
