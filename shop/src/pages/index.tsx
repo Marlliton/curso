@@ -1,4 +1,4 @@
-import { Carousel } from "@/components/Carousel";
+import { Carousel } from "@/components/carousel";
 import { ShoppingCartBag } from "@/components/shoppingCartBag";
 import { stripe } from "@/lib/stripe";
 import { HomeContainer, Product } from "@/styles/pages/home";
@@ -18,6 +18,11 @@ interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
+  function handleClick(event: any) {
+    console.log("click");
+    event.preventDefault();
+  }
+
   return (
     <>
       <Head>
@@ -35,7 +40,7 @@ export default function Home(props: HomeProps) {
                     <strong>{product.name}</strong>
                     <span>{product.price}</span>
                   </span>
-                  <ShoppingCartBag />
+                  <ShoppingCartBag green onClick={handleClick} />
                 </footer>
               </Product>
             );

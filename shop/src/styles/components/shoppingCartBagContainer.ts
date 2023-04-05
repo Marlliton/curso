@@ -17,12 +17,17 @@ export const ShoppingCartBagContainer = styled("button", {
   alignItems: "center",
 
   position: "relative",
+
+  "&:hover": {
+    transition: "all .2s ease-in-out",
+    filter: "brightness(.9)",
+  },
 });
 
 export const Counter = styled("div", {
   position: "absolute",
-  top: -10,
-  right: -10,
+  top: -6,
+  right: -6,
 
   height: 24,
   width: 24,
