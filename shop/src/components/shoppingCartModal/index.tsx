@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogOverlay,
   DialogClose,
+  ProductWrapper,
 } from "../../styles/components/shoppingCartModal";
 import i from "../../assets/shirt.png";
 import Image from "next/image";
@@ -13,20 +14,24 @@ export function ShoppingCartModal() {
   return (
     <Dialog.Portal>
       <DialogOverlay />
+
       <DialogContent>
         <DialogClose>
           <X size={24} weight="bold" />
         </DialogClose>
+
         <Dialog.Title>Titulo Dessa merda</Dialog.Title>
 
-        <ProductDetails>
-          <Image src={i} alt="" height={94} width={94} />
-          <div>
-            <p>Camiseta 01</p>
-            <span>R$ 79.99</span>
-            <button>Remover</button>
-          </div>
-        </ProductDetails>
+        <ProductWrapper>
+          <ProductDetails>
+            <Image src={i} alt="" height={94} width={94} />
+            <div>
+              <p>Camiseta 01</p>
+              <span>R$ 79.99</span>
+              <button>Remover</button>
+            </div>
+          </ProductDetails>
+        </ProductWrapper>
 
         <footer>
           <div>
@@ -35,7 +40,7 @@ export function ShoppingCartModal() {
           </div>
           <div>
             <h2>Valor total</h2>
-            <span>R$ 270.89</span>
+            <strong>R$ 270.89</strong>
           </div>
 
           <button>Finalizar compra</button>
