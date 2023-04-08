@@ -2,9 +2,10 @@ import { Handbag } from "phosphor-react";
 import {
   ShoppingCartBagContainer,
   Counter,
-} from "../../styles/components/shoppingCartBagContainer";
+} from "@/styles/components/shoppingCartBagContainer";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ShoppingCartModal } from "../shoppingCartModal";
+import { useCart } from "@/hooks/useCart";
 
 interface ShoppingCartBagProps {
   showCounter?: boolean;
@@ -17,6 +18,8 @@ export function ShoppingCartBag({
   green,
   onClick: handleClick,
 }: ShoppingCartBagProps) {
+  const { products } = useCart();
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -24,7 +27,7 @@ export function ShoppingCartBag({
           css={{ backgroundColor: `${green ? "$green500" : ""}` }}
           onClick={handleClick}
         >
-          {showCounter && <Counter>22</Counter>}
+          {showCounter && products.length ? <Counter>{products.length}</Counter> : null}
           <Handbag size={24} />
         </ShoppingCartBagContainer>
       </Dialog.Trigger>

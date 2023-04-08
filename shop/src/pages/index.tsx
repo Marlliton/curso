@@ -1,26 +1,32 @@
 import { Carousel } from "@/components/carousel";
-import { ShoppingCartBag } from "@/components/shoppingCartBag";
+import { useCart } from "@/hooks/useCart";
 import { stripe } from "@/lib/stripe";
-import { HomeContainer, Product } from "@/styles/pages/home";
+import { HomeContainer, Product, ProductBag } from "@/styles/pages/home";
+import { currencyBRL } from "@/utils/currencyFormatterBRL";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { ShoppingBag } from "phosphor-react";
 import Stripe from "stripe";
 
+type ProductProps = {
+  id: string;
+  description: string;
+  image: string;
+  name: string;
+  price: number;
+  priceId: string;
+};
 interface HomeProps {
-  products: {
-    id: string;
-    description: string;
-    image: string;
-    name: string;
-    price: string;
-  }[];
+  products: ProductProps[];
 }
 
 export default function Home(props: HomeProps) {
-  function handleClick(event: any) {
-    console.log("click");
+  const { addToCart, productHasExists } = useCart();
+  function handleClick(event: any, product: ProductProps) {
     event.preventDefault();
+
+    addToCart(product);
   }
 
   return (
@@ -38,9 +44,14 @@ export default function Home(props: HomeProps) {
                 <footer>
                   <span>
                     <strong>{product.name}</strong>
-                    <span>{product.price}</span>
+                    <span>{currencyBRL.format(product.price)}</span>
                   </span>
-                  <ShoppingCartBag green onClick={handleClick} />
+                  <ProductBag
+                    disabled={productHasExists(product)}
+                    onClick={(event) => handleClick(event, product)}
+                  >
+                    <ShoppingBag size={24} />
+                  </ProductBag>
                 </footer>
               </Product>
             );
@@ -63,10 +74,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       description: product.description,
       image: product.images[0] ?? "",
       name: product.name,
-      price: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(price.unit_amount! / 100),
+      price: price.unit_amount! / 100,
+      priceId: price.id,
     };
   });
 

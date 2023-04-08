@@ -5,12 +5,25 @@ import {
   DialogClose,
   ProductWrapper,
 } from "../../styles/components/shoppingCartModal";
-import i from "../../assets/shirt.png";
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "phosphor-react";
+import { useCart } from "@/hooks/useCart";
+import axios from "axios";
 
 export function ShoppingCartModal() {
+  const { products, removeFromCart, getTotalPrice } = useCart();
+
+  async function handlePayProduct() {
+    try {
+      const response = await axios.post("/api/checkout", {
+        products,
+      });
+
+      window.location.href = response.data;
+    } catch (error) {}
+  }
+
   return (
     <Dialog.Portal>
       <DialogOverlay />
@@ -20,30 +33,34 @@ export function ShoppingCartModal() {
           <X size={24} weight="bold" />
         </DialogClose>
 
-        <Dialog.Title>Titulo Dessa merda</Dialog.Title>
+        <Dialog.Title>Sacola de compras</Dialog.Title>
 
         <ProductWrapper>
-          <ProductDetails>
-            <Image src={i} alt="" height={94} width={94} />
-            <div>
-              <p>Camiseta 01</p>
-              <span>R$ 79.99</span>
-              <button>Remover</button>
-            </div>
-          </ProductDetails>
+          {products.map((prod) => {
+            return (
+              <ProductDetails key={prod.id}>
+                <Image src={prod.image} alt="" height={94} width={94} />
+                <div>
+                  <p>{prod.name}</p>
+                  <span>{prod.price}</span>
+                  <button onClick={() => removeFromCart(prod.id)}>Remover</button>
+                </div>
+              </ProductDetails>
+            );
+          })}
         </ProductWrapper>
 
         <footer>
           <div>
             <span>Quantidade</span>
-            <span>03 itens</span>
+            <span>{products.length} itens</span>
           </div>
           <div>
             <h2>Valor total</h2>
-            <strong>R$ 270.89</strong>
+            <strong>{getTotalPrice()}</strong>
           </div>
 
-          <button>Finalizar compra</button>
+          <button onClick={handlePayProduct}>Finalizar compra</button>
         </footer>
       </DialogContent>
     </Dialog.Portal>

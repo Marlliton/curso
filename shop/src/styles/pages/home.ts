@@ -70,3 +70,32 @@ export const Product = styled(Link, {
     },
   },
 });
+
+export const ProductBag = styled("button", {
+  height: "3rem",
+  width: "3rem",
+
+  border: "none",
+  outline: "none",
+  cursor: "pointer",
+  color: "$gray300",
+
+  borderRadius: 6,
+  backgroundColor: "$green500",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  position: "relative",
+
+  "&:disabled": {
+    cursor: "not-allowed",
+    filter: "brightness(.8)",
+  },
+
+  "&:not(:disabled):hover": {
+    transition: "all .2s ease-in-out",
+    filter: "brightness(.9)",
+  },
+});

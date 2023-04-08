@@ -1,11 +1,12 @@
-import Image from "next/image";
-import { ProductContainer, ImageContainer, ProductDetails } from "@/styles/pages/product";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { useCart } from "@/hooks/useCart";
 import { stripe } from "@/lib/stripe";
-import Stripe from "stripe";
-import { useRouter } from "next/router";
-import axios from "axios";
+import { ImageContainer, ProductContainer, ProductDetails } from "@/styles/pages/product";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import Stripe from "stripe";
+import { currencyBRL } from "@/utils/currencyFormatterBRL";
 
 interface ProductProps {
   product: {
@@ -13,26 +14,17 @@ interface ProductProps {
     description: string;
     image: string;
     name: string;
-    price: string;
+    price: number;
     priceId: string;
   };
 }
 
 export default function Product({ product }: ProductProps) {
   const { isFallback } = useRouter();
+  const { addToCart, productHasExists } = useCart();
 
   if (isFallback) {
     return <p>loading...</p>;
-  }
-
-  async function handlePayProduct() {
-    try {
-      const response = await axios.post("/api/checkout", {
-        priceId: product.priceId,
-      });
-
-      window.location.href = response.data;
-    } catch (error) {}
   }
 
   return (
@@ -43,17 +35,19 @@ export default function Product({ product }: ProductProps) {
 
       <ProductContainer>
         <ImageContainer>
-          <Image width={520} height={480} src={product.image} alt="Camiseta" />
+          <Image width={520} height={480} src={product.image} alt="" />
         </ImageContainer>
 
         <ProductDetails>
           <div>
             <h1>{product.name}</h1>
-            <span>{product.price}</span>
+            <span>{currencyBRL.format(product.price)}</span>
             <p>{product.description}</p>
           </div>
 
-          <button onClick={handlePayProduct}>Adicionar a sacola</button>
+          <button disabled={productHasExists(product)} onClick={() => addToCart(product)}>
+            Adicionar a sacola
+          </button>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -82,10 +76,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
         id: productId,
         name: product.name,
         image: product.images[0],
-        price: Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(price.unit_amount! / 100),
+        price: price.unit_amount! / 100,
         description: product.description,
         priceId: price.id,
       },
