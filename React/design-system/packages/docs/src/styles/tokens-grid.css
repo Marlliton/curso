@@ -1,0 +1,28 @@
+.tokens-grid {
+  color: #fff; 
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.tokens-grid thead tr th {
+  padding: .75rem 1rem
+}
+
+.tokens-grid tbody tr td {
+  padding: .75rem 1rem
+}
+
+.tokens-grid tbody td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.tokens-grid tbody td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.tokens-grid tbody tr:nth-child(odd) td {
+  background-color: #444;
+}
