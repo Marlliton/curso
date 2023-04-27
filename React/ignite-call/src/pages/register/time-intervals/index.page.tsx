@@ -19,8 +19,11 @@ import {
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { getWeekDay } from '@/utils/getWeekDay'
+import { convertTimeStringToMinutes } from '@/utils/convertTimeStringToMinutes'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
 const timeIntervalsSchema = z.object({
   intervals: z
@@ -36,9 +39,31 @@ const timeIntervalsSchema = z.object({
     .transform((intervals) => intervals.filter((interval) => interval.enable))
     .refine((intervals) => intervals.length > 0, {
       message: 'Selecione pelo menos um dia da semana',
-    }),
+    })
+    .transform((intervals) =>
+      intervals.map((interval) => {
+        return {
+          weekDay: interval.weekDay,
+          startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
+          endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
+        }
+      }),
+    )
+    .refine(
+      (intervals) => {
+        return intervals.every(
+          (interval) =>
+            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
+        )
+      },
+      {
+        message: 'O horário de termino deve ser pelo menos 1h depois do início',
+      },
+    ),
 })
-interface TimeIntervalsData extends z.infer<typeof timeIntervalsSchema> {}
+interface TimeIntervalsDataInput extends z.input<typeof timeIntervalsSchema> {}
+interface TimeIntervalsDataOutput
+  extends z.output<typeof timeIntervalsSchema> {}
 
 export default function TimeIntervals() {
   const {
@@ -47,7 +72,7 @@ export default function TimeIntervals() {
     watch,
     control,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<TimeIntervalsDataInput>({
     resolver: zodResolver(timeIntervalsSchema),
     defaultValues: {
       intervals: [
@@ -68,9 +93,14 @@ export default function TimeIntervals() {
   })
   const weekDays = getWeekDay()
   const intervals = watch('intervals')
+  const router = useRouter()
 
-  function handleSetTimeIntervals(data: TimeIntervalsData) {
-    console.log(data)
+  async function handleSetTimeIntervals(data: any) {
+    const { intervals } = data as TimeIntervalsDataOutput
+    try {
+      await api.post('/users/time-interval', { intervals })
+      await router.push('/register/update-profile')
+    } catch (error) {}
   }
 
   return (
