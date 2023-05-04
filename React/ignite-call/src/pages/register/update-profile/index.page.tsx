@@ -38,12 +38,7 @@ export default function UpdateProfile() {
     try {
       await api.put('/users/profile', { bio: data.bio })
       await router.push(`/schedule/${session.data?.user.username}`)
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: index.page.tsx:42 ~ handleUpdateProfileSubmit ~ error:',
-        error,
-      )
-    }
+    } catch (error) {}
   }
 
   return (
