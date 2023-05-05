@@ -10,6 +10,9 @@ import {
 import { getWeekDay } from '@/utils/getWeekDay'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
+import { useQuery } from 'react-query'
+import { useRouter } from 'next/router'
+import { api } from '@/lib/axios'
 
 interface CalendarWeek {
   week: number
@@ -21,6 +24,10 @@ interface CalendarWeek {
 
 type CalendarWeeks = CalendarWeek[]
 
+interface BlockedDates {
+  blockedWeekDates: number[]
+}
+
 interface CalendarProps {
   selectedDate: Date | null
   onSelectedDate(date: Date): void
@@ -30,12 +37,30 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(() => {
     return dayjs().set('date', 1)
   })
+  const router = useRouter()
 
   const currentMonth = currentDate.format('MMMM')
   const currentYear = currentDate.format('YYYY')
   const shortWeekDays = getWeekDay({ short: true })
+  const username = String(router.query.username)
+
+  const { data: blockedDates } = useQuery<BlockedDates>(
+    ['blocked-dates', currentDate.get('year'), currentDate.get('month')],
+    async () => {
+      const response = await api.get(`/users/${username}/blocked-dates`, {
+        params: {
+          year: currentDate.get('year'),
+          month: currentDate.get('month'),
+        },
+      })
+
+      return response.data
+    },
+  )
 
   const calendarWeekDays = useMemo(() => {
+    if (!blockedDates) return []
+
     const daysInMonthArray = Array.from({
       length: currentDate.daysInMonth(),
     }).map((_, i) => {
@@ -69,7 +94,9 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
       ...daysInMonthArray.map((date) => {
         return {
           date,
-          disabled: date.endOf('day').isBefore(new Date()),
+          disabled:
+            date.endOf('day').isBefore(new Date()) ||
+            blockedDates.blockedWeekDates.includes(date.get('day')),
         }
       }),
       lastMonthFillArray.map((date) => {
@@ -92,7 +119,7 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
       [],
     )
     return calendarWeekDays
-  }, [currentDate])
+  }, [currentDate, blockedDates])
 
   function handlePreviousMonth() {
     setCurrentDate(currentDate.subtract(1, 'month'))

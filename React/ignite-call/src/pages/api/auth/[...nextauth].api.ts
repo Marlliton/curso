@@ -19,6 +19,9 @@ export function buildNextAuthOptions(
               'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar',
           },
         },
+        httpOptions: {
+          timeout: 40000,
+        },
         profile(profile: GoogleProfile) {
           return {
             id: profile.sub,
