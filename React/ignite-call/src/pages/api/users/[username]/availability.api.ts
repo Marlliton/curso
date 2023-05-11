@@ -22,7 +22,7 @@ export default async function handle(
 
   if (!user) return res.status(400).json({ message: 'User does not exists.' })
 
-  const referenceDate = dayjs(date)
+  const referenceDate = dayjs(String(date))
   const isPaste = referenceDate.endOf('day').isBefore(new Date())
 
   if (isPaste) return res.json({ possibleTimes: [], availableTimes: [] })
@@ -58,9 +58,13 @@ export default async function handle(
   })
 
   const availableTimes = possibleTimes.filter((time) => {
-    return !blockedTimes.some(
+    const isBlockedTime = blockedTimes.some(
       (blockedTime) => blockedTime.date.getHours() === time,
     )
+
+    const isTimeInPast = referenceDate.set('hour', time).isBefore(new Date())
+
+    return !isBlockedTime && !isTimeInPast
   })
 
   return res.json({ possibleTimes, availableTimes })

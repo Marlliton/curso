@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
-import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '@/lib/prisma'
-import dayjs from 'dayjs'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handle(
   req: NextApiRequest,
@@ -39,13 +38,26 @@ export default async function handle(
       ),
   )
 
-  const blockedDataRaw = await prisma.$queryRaw`
-    SELECT * 
+  const blockedDatesRaw: Array<{ date: number }> = await prisma.$queryRaw`
+    SELECT 
+      EXTRACT(DAY FROM S.date) AS date,
+      COUNT(S.date) AS amount, 
+      ((UTI.end_time_in_minutes - UTI.start_time_in_minutes) / 60) AS size
+
     FROM schedulings S
+
+    LEFT JOIN user_time_intervals UTI 
+      ON UTI.week_day = WEEKDAY(DATE_ADD(S.date, INTERVAL 1 DAY)) -- O dia no mysql começa em 1, no javascript no 0. Então vamos adicionar 1 nas datas dos nossos schedulings
 
     WHERE S.user_id = ${user.id}
       AND DATE_FORMAT(S.date, "%Y-%m") = ${`${year}-${month}`}
-  `
 
-  return res.json({ blockedWeekDates, blockedDataRaw })
+    GROUP BY EXTRACT(DAY FROM S.date),
+      ((UTI.end_time_in_minutes - UTI.start_time_in_minutes) / 60)
+      
+    HAVING amount >= size
+      OR size = 0
+  `
+  const blockedDates = blockedDatesRaw.map((item) => item.date)
+  return res.json({ blockedWeekDates, blockedDates })
 }

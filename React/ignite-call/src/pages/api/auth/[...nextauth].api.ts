@@ -8,6 +8,11 @@ export function buildNextAuthOptions(
   res: NextApiResponse | NextPageContext['res'],
 ): NextAuthOptions {
   return {
+    logger: {
+      error(code, metadata) {
+        console.error('Error:', code, metadata)
+      },
+    },
     adapter: PrismaAdapter(req, res),
     providers: [
       GoogleProvider({

@@ -26,6 +26,7 @@ type CalendarWeeks = CalendarWeek[]
 
 interface BlockedDates {
   blockedWeekDates: number[]
+  blockedDates: number[]
 }
 
 interface CalendarProps {
@@ -50,7 +51,7 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
       const response = await api.get(`/users/${username}/blocked-dates`, {
         params: {
           year: currentDate.get('year'),
-          month: currentDate.get('month'),
+          month: String(currentDate.get('month') + 1).padStart(2, '0'),
         },
       })
 
@@ -60,6 +61,10 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
 
   const calendarWeekDays = useMemo(() => {
     if (!blockedDates) return []
+    console.log(
+      '🚀 ~ file: index.tsx:61 ~ Calendar ~ blockedDates:',
+      blockedDates,
+    )
 
     const daysInMonthArray = Array.from({
       length: currentDate.daysInMonth(),
@@ -96,7 +101,8 @@ export function Calendar({ onSelectedDate, selectedDate }: CalendarProps) {
           date,
           disabled:
             date.endOf('day').isBefore(new Date()) ||
-            blockedDates.blockedWeekDates.includes(date.get('day')),
+            blockedDates.blockedWeekDates.includes(date.get('day')) ||
+            blockedDates.blockedDates.includes(date.get('date')),
         }
       }),
       lastMonthFillArray.map((date) => {
