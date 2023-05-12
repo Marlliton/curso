@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { prisma } from '@/lib/prisma'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handle(
   req: NextApiRequest,
