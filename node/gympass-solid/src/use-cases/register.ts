@@ -1,6 +1,8 @@
-import { UsersRepository } from "@/repositories/users-repository";
-import { UserAlreadyExistisErro } from "./errors/user-already-existis-erro";
 import { hash } from "bcryptjs";
+
+import { UsersRepository } from "@/repositories/users-repository";
+
+import { UserAlreadyExistisErro } from "./errors/user-already-existis-erro";
 
 interface RegisterUseCaseRequest {
   name: string;
