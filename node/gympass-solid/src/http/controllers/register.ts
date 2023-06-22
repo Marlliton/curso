@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
 import { PrismaUserRepository } from "@/repositories/prisma/prisma-user-repository";
-import { UserAlreadyExistisErro } from "@/use-cases/errors/user-already-existis-erro";
+import { UserAlreadyExistisErro } from "@/use-cases/errors/user-already-existis-error";
 import { RegisterUseCase } from "@/use-cases/register";
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
@@ -26,7 +26,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
       return reply.status(409).send({ message: error.message });
     }
 
-    return reply.status(500).send();
+    throw error;
   }
 
   reply.status(201).send();
