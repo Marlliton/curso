@@ -12,20 +12,20 @@ let inMemoryGymRepository: InMemoryGymsRepository;
 let sut: CheckInUseCase;
 
 describe("Check-in Use Case", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     inMemoryCheckInRepository = new InMemoryCheckInRepository();
     inMemoryGymRepository = new InMemoryGymsRepository();
     sut = new CheckInUseCase(inMemoryCheckInRepository, inMemoryGymRepository);
 
     vi.useFakeTimers();
 
-    inMemoryGymRepository._items.push({
+    await inMemoryGymRepository.create({
       id: "gym-01",
       description: "",
       phone: "",
       title: "",
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: new Decimal(-10.7488685),
+      longitude: new Decimal(-37.8017486),
     });
   });
 
@@ -37,8 +37,8 @@ describe("Check-in Use Case", () => {
     const { checkIn } = await sut.execute({
       gymId: "gym-01",
       userId: "user-01",
-      latitude: -10.7488685,
-      longitude: -37.8017486,
+      userLatitude: -10.7488685,
+      userLongitude: -37.8017486,
     });
 
     expect(checkIn).toBeTruthy();
@@ -50,16 +50,16 @@ describe("Check-in Use Case", () => {
     await sut.execute({
       gymId: "gym-01",
       userId: "user-01",
-      latitude: -10.7488685,
-      longitude: -37.8017486,
+      userLatitude: -10.7488685,
+      userLongitude: -37.8017486,
     });
 
     await expect(() =>
       sut.execute({
         gymId: "gym-01",
         userId: "user-01",
-        latitude: -10.7488685,
-        longitude: -37.8017486,
+        userLatitude: -10.7488685,
+        userLongitude: -37.8017486,
       })
     ).rejects.toBeInstanceOf(Error);
   });
@@ -70,8 +70,8 @@ describe("Check-in Use Case", () => {
     await sut.execute({
       gymId: "gym-01",
       userId: "user-01",
-      latitude: -10.7488685,
-      longitude: -37.8017486,
+      userLatitude: -10.7488685,
+      userLongitude: -37.8017486,
     });
 
     vi.setSystemTime(new Date(2002, 0, 21, 8, 0, 0));
@@ -79,10 +79,30 @@ describe("Check-in Use Case", () => {
     const { checkIn } = await sut.execute({
       gymId: "gym-01",
       userId: "user-01",
-      latitude: -10.7488685,
-      longitude: -37.8017486,
+      userLatitude: -10.7488685,
+      userLongitude: -37.8017486,
     });
 
     expect(checkIn).toBeTruthy();
+  });
+
+  it("should not be able to check in on distant gym", async () => {
+    await inMemoryGymRepository.create({
+      id: "gym-02",
+      description: "",
+      phone: "",
+      title: "",
+      latitude: new Decimal(-10.6879357),
+      longitude: new Decimal(-37.887771),
+    });
+
+    await expect(
+      sut.execute({
+        gymId: "gym-02",
+        userId: "user-01",
+        userLatitude: -10.7488685,
+        userLongitude: -37.8017486,
+      })
+    ).rejects.toBeInstanceOf(Error);
   });
 });
