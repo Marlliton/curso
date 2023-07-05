@@ -2,28 +2,27 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { InMemoryGymsRepository } from "@/repositories/in-memory-repositories/in-memory-gyms-repository";
 
-import { CreateGymRepository } from "./create-gym";
-import { RegisterUseCase } from "./register";
+import { CreateGymUseCase } from "./create-gym";
 
-let inMemoryGymRepository: InMemoryGymsRepository;
+let gymRepository: InMemoryGymsRepository;
 // SUT - System Under Teste (Sistema em teste) trata-se do ator que está sendo testado nesse caso a classe instanciada abaixo
-let sut: CreateGymRepository;
+let sut: CreateGymUseCase;
 
 describe("Register Use Case", () => {
   beforeEach(() => {
-    inMemoryGymRepository = new InMemoryGymsRepository();
-    sut = new CreateGymRepository(inMemoryGymRepository);
+    gymRepository = new InMemoryGymsRepository();
+    sut = new CreateGymUseCase(gymRepository);
   });
 
   it("should be able to register", async () => {
-    const { user } = await sut.execute({
-      title: "Javascript Gym",
+    const { gym } = await sut.execute({
+      title: "javascript gym",
       description: null,
       phone: null,
       latitude: -10.7488685,
       longitude: -37.8017486,
     });
 
-    expect(user).toBeTruthy();
+    expect(gym).toBeTruthy();
   });
 });
