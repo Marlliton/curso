@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { CheckInRepository } from "../check-ins-repository";
 
 export class InMemoryCheckInRepository implements CheckInRepository {
-  private _items: CheckIn[] = [];
+  readonly _items: CheckIn[] = [];
 
   async findByUserIdOnDate(
     userId: string,
@@ -25,6 +25,20 @@ export class InMemoryCheckInRepository implements CheckInRepository {
     if (!checkIn) return null;
 
     return checkIn;
+  }
+
+  async findById(id: string): Promise<CheckIn | null> {
+    return this._items.find((checkIn) => checkIn.id === id) ?? null;
+  }
+
+  async save(data: CheckIn): Promise<CheckIn> {
+    const checkInIndex = this._items.findIndex((item) => item.id === data.id);
+
+    if (checkInIndex >= 0) {
+      this._items[checkInIndex] = data;
+    }
+
+    return data;
   }
 
   async findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
