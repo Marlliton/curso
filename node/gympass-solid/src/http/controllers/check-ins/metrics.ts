@@ -8,5 +8,5 @@ export async function metrics(request: FastifyRequest, reply: FastifyReply) {
     userId: request.user.sub,
   });
 
-  reply.status(201).send({ checkInsCount });
+  reply.status(200).send({ checkInsCount });
 }
