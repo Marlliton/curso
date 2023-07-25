@@ -1,0 +1,21 @@
+# Nome do workflow
+name: Run Unity Tests
+
+# Quando executar o workflow?
+on: [push] # Poderia ser também com pull_request
+
+# Definindo jobs para rodarem quando o push for feito
+jobs:
+  run-unity-tests:
+    name: Run Unity Tests
+    runs-on: ubuntu-latest # vamos rodar esse job dentro do ubuntu
+
+    steps: # passos (o que eu quero que o job execute?) Exitem setups prontos para serem usados no link 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - run: yarn ci # instala as dependências
+      - run: yarn test
+
